@@ -26,5 +26,6 @@
  * ```
  */
 
-import './index.css';
+import bootstrap from 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.jsx';
