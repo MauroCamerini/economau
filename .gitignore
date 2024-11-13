@@ -1,6 +1,3 @@
-# Here's where sql lite database is stored
-dbfile/
-
 # Logs
 logs
 *.log

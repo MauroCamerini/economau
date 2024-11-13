@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
+const { default: dbcontroller } = require('./controllers/dbcontroller');
 
-import { initdb, testinsert } from './testdb';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -29,8 +29,13 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  initdb()
-  ipcMain.handle('testinsert', testinsert)
+
+  ipcMain.handle('insertTrx', async (_, data) => dbcontroller.insertTrx(data))
+  ipcMain.handle('updateTrx', async (_, id, data) => dbcontroller.updateTrx(id))
+  ipcMain.handle('deleteTrx', async (_, id) => dbcontroller.deleteTrx(id))
+  ipcMain.handle('getAllTrx', async (_) => dbcontroller.getAllTrx())
+  ipcMain.handle('getAllLists', async (_) => dbcontroller.getAllLists())
+  
   createWindow();
 
   // On OS X it's common to re-create a window in the app when the
