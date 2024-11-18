@@ -28,7 +28,8 @@ npm start
     - **React Router**
     - **React Hook Form**
     - **React Bootstrap**
-- **Yup: Schema validation**
+- **Webpack**
+- **Yup:** Schema validation
 - **better-sqlite3:** Local storage with SQLite for fast, secure data handling
 
 ## Current Project Status
@@ -37,6 +38,10 @@ npm start
 - Database created and filled with some data (check *docs/createdb.sql*)
 - The React app is loaded within a Context, which loads data from the database tables and making it accesible for all the components.
 - Both SQL queries (in the terminal, using SQLite’s verbose mode) and their JSON responses (in the browser console) are logged.
+- Automated the integration of API functions between dbcontroller and DatabaseContext using dynamic generation for ipcMain and ipcRenderer.
+- Transitioned to a hierarchical table structure for categories, unifying the previous categories and details tables.
+- Implemented a view for inserting transactions with validation.
+- Added a view for retrieving and displaying all transactions from the database.
 
 ## Contact
 For questions or feedback, reach out at maurocamerini90@gmail.com.
