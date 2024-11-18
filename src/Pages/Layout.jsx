@@ -7,7 +7,10 @@ export default function Layout () {
     
     return (<>
     <h1>ECONOMAU</h1>
-    <NewTransaction />
+    <div><ul>
+        <li><Link to="/">New transaction</Link></li>
+        <li><Link to="getall">Get all transactions</Link></li>
+    </ul></div>
         <Outlet />
     </>)
 }

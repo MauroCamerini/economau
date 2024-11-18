@@ -1,59 +1,64 @@
 import db from "../db"
+import { TransactionDataSchema } from "../utils/schema";
 
 import { tables } from "../utils/tables"
 
-// Transaction fields
-// (Date, Period, Amount, Category, Details, Type, Account, Entity, ExtraData)
+// Inserta una transacción en la base de datos
+async function insertTransaction(transaction) {
+  try {
+      // Validar la data
+      await TransactionDataSchema.validate(transaction);
 
-/* Transaction object
-{
-    date,
-    period,
-    amount,
-    category,
-    details,
-    type,
-    account,
-    entity,
-    extradata
-}
-*/
+      const insert = db.prepare(`
+          INSERT INTO Transactions (
+              Date,
+              Period,
+              Amount,
+              Category,
+              Type,
+              Account,
+              Entity,
+              ExtraData
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `);
 
+      const result = insert.run(
+          transaction.Date,
+          transaction.Period,
+          transaction.Amount,
+          transaction.Category,
+          transaction.Type,
+          transaction.Account,
+          transaction.Entity || null,
+          transaction.ExtraData || null
+      );
 
-/*
-  Public methods
-*/
-const insertTrx = (data) => {
-
-    const stm = db.prepare(
-        'INSERT INTO Transactions \
-        (Date, Period, Amount, Category, Details, Type, Account, Entity, ExtraData) \
-        VALUES (@date, @period, @amount, @category, @details, @type, @account, @entity, @extradata)')
-
-    stm.run(data)
-}
-
-const updateTrx = (id, data) => {
-
-    const stm = db.prepare(
-        'UPDATE Transactions SET \
-        Date = @date, Period = @period, Amount = @amount, Category = @category, Details = @details, \
-        Type = @type, Account = @account, Entity = @entity, ExtraData = @extradata \
-        WHERE id = @id')
-
-    stm.run({...data, id})
+      console.log(`Registro insertado con ID: ${result.lastInsertRowid}`);
+      return { success: true, id: result.lastInsertRowid };
+  } catch (error) {
+      console.error('Error al insertar la transacción:', error.message);
+      return { success: false, error: error.message };
+  }
 }
 
-const deleteTrx = (id) => {
-    const stm = db.prepare('DELETE FROM Transactions WHERE id = @id');
-
-    stm.run(id)
-}
-const getAllTrx = () => {
+const getAllTransactions = () => {
     
-    const stm = db.prepare('SELECT * FROM Transactions');
+    
+    try {
+      const data = db.prepare('SELECT * FROM Transactions').all();
+      return {
+        success: true,
+        data,
+      }
+    } catch(error) {
+      console.error(`Error al las transacciones: ${error.message}`);
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+    
 
-    return stm.all();
 }
 
 const getAllLists = () => {
@@ -76,12 +81,10 @@ const getAllLists = () => {
     };
   }
   
-
+/* this list should match api.js list */
 export default {
-    insertTrx,
-    updateTrx,
-    deleteTrx,
-    getAllTrx,
+    insertTransaction,
+    getAllTransactions,
     getAllLists
 }
 

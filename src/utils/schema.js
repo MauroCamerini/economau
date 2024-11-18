@@ -1,11 +1,7 @@
 import * as Yup from 'yup';
 
 
-const TransactionsSchema = Yup.object().shape({
-	ID: Yup.number()
-	  .integer('ID debe ser un número entero.')
-	  .positive('ID debe ser un número positivo.')
-	  .nullable(), // Permitimos nulo para manejar valores generados automáticamente
+export const TransactionDataSchema = Yup.object().shape({
 	Date: Yup.string()
 	  .required('La fecha es obligatoria.')
 	  .matches(
@@ -13,12 +9,6 @@ const TransactionsSchema = Yup.object().shape({
 		'La fecha debe estar en formato YYYY-MM-DD.'
 	  ),
 	Period: Yup.string()
-	  .transform((value) => {
-		if (/^\d{4}-\d{2}$/.test(value)) {
-		  return `${value}-01`; // Agrega el día 01 si está en formato YYYY-MM
-		}
-		return value;
-	  })
 	  .required('El período es obligatorio.')
 	  .matches(
 		/^\d{4}-\d{2}-01$/,
@@ -30,9 +20,6 @@ const TransactionsSchema = Yup.object().shape({
 	Category: Yup.number()
 	  .integer('La categoría debe ser un número entero.')
 	  .required('La categoría es obligatoria.'),
-	Details: Yup.number()
-	  .integer('Los detalles deben ser un número entero.')
-	  .nullable(), // Permitimos nulo ya que no es obligatorio
 	Type: Yup.string()
 	  .required('El tipo es obligatorio.')
 	  .matches(

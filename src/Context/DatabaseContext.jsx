@@ -8,11 +8,14 @@ export function DatabaseProvider({ children }) {
     const [tables, setTables] = React.useState(null);
     const [error, setError] = React.useState(null);
   
-
+    const dbfunctions = Object.keys(window.dbcontroller).reduce((prev, funcName) => {
+      prev[funcName] = window.dbcontroller[funcName]
+      return prev
+    }, {})
   
     React.useEffect(() => {
       if (loading && !tables) {
-        window.dbcontroller.getAllLists().then((res) => {
+        dbfunctions.getAllLists().then((res) => {
           if (res.success) {
             setTables(res.data);
             setLoading(false);
@@ -36,7 +39,7 @@ export function DatabaseProvider({ children }) {
     }
   
     return (
-      <DatabaseContext.Provider value={{ tables }}>
+      <DatabaseContext.Provider value={{ tables, dbfunctions }}>
         {children}
       </DatabaseContext.Provider>
     );

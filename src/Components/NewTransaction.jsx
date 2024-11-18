@@ -11,6 +11,7 @@ import { DatabaseContext } from '../Context/DatabaseContext';
 
 export default function NewTransaction () {
 
+    const {dbfunctions} = React.useContext(DatabaseContext)
 
     const {
             register,
@@ -36,10 +37,8 @@ export default function NewTransaction () {
 
 
     const onSubmit = (data) => {
-        console.log("TRANSACTION", adaptTransactionData(data))
-    
+        dbfunctions.insertTransaction(adaptTransactionData(data)).then(res => console.log(res))
     }
-
 
     return(<>
 

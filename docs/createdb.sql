@@ -37,7 +37,6 @@ CREATE TABLE "Transactions" (
 	"Period"	TEXT NOT NULL,				-- YYYY-MM-01
 	"Amount"	INTEGER NOT NULL DEFAULT 0,	-- stores cent
 	"Category"	INTEGER NOT NULL,
-	"Details"	INTEGER,
 	"Type"		TEXT NOT NULL,		-- 3 ASCII Capital letters
 	"Account"	TEXT NOT NULL,  -- 2 to 4 ASCII Captial letters
 	"Entity"	INTEGER,

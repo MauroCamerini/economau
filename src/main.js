@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
 const { default: dbcontroller } = require('./controllers/dbcontroller');
+const { default: api } = require('./api');
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -30,11 +31,16 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
 
-  ipcMain.handle('insertTrx', async (_, data) => dbcontroller.insertTrx(data))
-  ipcMain.handle('updateTrx', async (_, id, data) => dbcontroller.updateTrx(id))
-  ipcMain.handle('deleteTrx', async (_, id) => dbcontroller.deleteTrx(id))
-  ipcMain.handle('getAllTrx', async (_) => dbcontroller.getAllTrx())
-  ipcMain.handle('getAllLists', async (_) => dbcontroller.getAllLists())
+  api.forEach((funcName) => {
+    ipcMain.handle(funcName, async (event, ...args) => {
+      try {
+        return await dbcontroller[funcName](...args)
+      } catch(err) {
+        console.error(`Error in ${funcName}:`, err);
+        throw err; // Propaga el error al renderer si es necesario
+      }
+    })
+  })
   
   createWindow();
 
