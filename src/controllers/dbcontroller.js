@@ -1,5 +1,7 @@
 import db from "../db"
 
+import { tables } from "../utils/tables"
+
 // Transaction fields
 // (Date, Period, Amount, Category, Details, Type, Account, Entity, ExtraData)
 
@@ -55,17 +57,25 @@ const getAllTrx = () => {
 }
 
 const getAllLists = () => {
-
-    return {
-        accounts: db.prepare('SELECT * from Accounts').all(),
-        categories: db.prepare('SELECT * from Categories').all(),
-        types: db.prepare('SELECT * from Types').all(),
-        details: db.prepare('SELECT * from Details').all(),
-        entities: db.prepare('SELECT * from Entities').all()
+  
+    try {
+      tables.forEach((table) => {
+        table.data = db.prepare(`SELECT * FROM ${table.name}`).all();
+      });
+    } catch (error) {
+      console.error(`Error al obtener datos de las tablas: ${error.message}`);
+      return {
+        success: false,
+        error: error.message,
+      };
     }
-    
-
-}
+  
+    return {
+      success: true,
+      data: tables,
+    };
+  }
+  
 
 export default {
     insertTrx,

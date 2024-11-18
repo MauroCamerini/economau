@@ -10,7 +10,9 @@ CREATE TABLE "Categories" (
 	"ID"	INTEGER NOT NULL UNIQUE,
 	"Name"	TEXT NOT NULL UNIQUE,
 	"Description"	TEXT,
-	PRIMARY KEY("ID" AUTOINCREMENT)
+	"ParentID"	INTEGER,
+	PRIMARY KEY("ID" AUTOINCREMENT),
+	FOREIGN KEY("ParentID") REFERENCES "Categories"("ID")
 )
 
 CREATE TABLE "Entities" (
@@ -20,13 +22,6 @@ CREATE TABLE "Entities" (
 	PRIMARY KEY("ID" AUTOINCREMENT)
 )
 
-CREATE TABLE "Details" (
-	"ID"	INTEGER NOT NULL UNIQUE,
-	"Category"	INTEGER NOT NULL,
-	"Name"	TEXT NOT NULL,
-	PRIMARY KEY("ID" AUTOINCREMENT),
-	FOREIGN KEY("Category") REFERENCES "Categories"("ID")
-)
 
 CREATE TABLE "Types" (
 	"ID"	TEXT NOT NULL UNIQUE,
@@ -40,7 +35,7 @@ CREATE TABLE "Transactions" (
 	"ID"		INTEGER NOT NULL UNIQUE,
 	"Date"		TEXT NOT NULL, 				-- YYYY-MM-DD
 	"Period"	TEXT NOT NULL,				-- YYYY-MM-01
-	"Amount"	INTEGER NOT NULL DEFAULT 0,	-- 2 decimal points added as format when showed, it stores real amount * 10
+	"Amount"	INTEGER NOT NULL DEFAULT 0,	-- stores cent
 	"Category"	INTEGER NOT NULL,
 	"Details"	INTEGER,
 	"Type"		TEXT NOT NULL,		-- 3 ASCII Capital letters
@@ -73,14 +68,14 @@ INSERT INTO Categories (Name) VALUES ("Ocio");
 INSERT INTO Categories (Name) VALUES ("Auto");
 INSERT INTO Categories (Name) VALUES ("Música");
 INSERT INTO Categories (Name) VALUES ("Salario");
-
-INSERT INTO Details (Category, Name) VALUES (11, "Seguro");
-INSERT INTO Details (Category, Name) VALUES (11, "Mantenimiento");
-INSERT INTO Details (Category, Name) VALUES (11, "Reparación");
-INSERT INTO Details (Category, Name) VALUES (6, "Internet");
-INSERT INTO Details (Category, Name) VALUES (6, "Celular");
-INSERT INTO Details (Category, Name) VALUES (3, "Combustible");
-INSERT INTO Details (Category, Name) VALUES (3, "Público");
+ParentID
+INSERT INTO Categories (ParentID, Name) VALUES (11, "Seguro");
+INSERT INTO Categories (ParentID, Name) VALUES (11, "Mantenimiento");
+INSERT INTO Categories (ParentID, Name) VALUES (11, "Reparación");
+INSERT INTO Categories (ParentID, Name) VALUES (6, "Internet");
+INSERT INTO Categories (ParentID, Name) VALUES (6, "Celular");
+INSERT INTO Categories (ParentID, Name) VALUES (3, "Combustible");
+INSERT INTO Categories (ParentID, Name) VALUES (3, "Público");
 
 INSERT INTO Accounts (id, name) VALUES ("CASH", "Efectivo");
 INSERT INTO Accounts (id, name) VALUES ("BP", "Cuenta Provincia");
