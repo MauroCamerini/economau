@@ -32,7 +32,7 @@ export const TransactionDataSchema = Yup.object().shape({
 		/^[A-Z]{2,4}$/,
 		'La cuenta debe tener entre 2 y 4 letras mayúsculas.'
 	  ),
-	Entity: Yup.number()
+	Contact: Yup.number()
 	  .integer('La entidad debe ser un número entero.')
 	  .nullable(), // Permitimos nulo ya que no es obligatorio
 	ExtraData: Yup.string()
@@ -76,7 +76,7 @@ export const NewTransactionSchema = Yup.object().shape({
 		/^[A-Z]{2,4}$/,
 		'La cuenta debe tener entre 2 y 4 letras mayúsculas.'
 	  ),
-	Entity: Yup.string().nullable(),
+	Contact: Yup.string().nullable(),
 	ExtraData: Yup.string('extr')
 	  .max(150, 'Los datos adicionales no pueden superar los 150 caracteres.')
 	  .nullable(), // Permitimos nulo ya que no es obligatorio

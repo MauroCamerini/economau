@@ -6,13 +6,15 @@ export default function ShowAllTransactions() {
     const [data, setData] = React.useState(null)
 
     React.useEffect(()=> {
-        if(!data){
-            dbfunctions.getAllTransactions().then((res)=>{
-                const newData = []
-                res.data.forEach(row => newData.push(`Fecha: ${row.Date} $ ${row.Amount} N° Categoría: ${row.Category}`))
-                setData(newData)
-            })
+
+        async function loadData() {
+            const newData = []
+            const res = await dbfunctions.getAllTransactions()
+            console.log(res)
+            res.forEach(row => newData.push(`Fecha: ${row.Date} $ ${row.Amount} N° Categoría: ${row.Category}`))
+            setData(newData)
         }
+        if(!data) loadData()
     }, [data])
 
     if(!data) return (<>CARGANDO...</>)

@@ -1,8 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
-const { default: dbcontroller } = require('./controllers/dbcontroller');
-const { default: api } = require('./api');
 
+
+const { apifunctions } = require('./apifunctions');
+const { DBController } = require('./dbcontroller/dbcontroller');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -31,10 +32,12 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
 
-  api.forEach((funcName) => {
+  const dbcontroller = new DBController()
+
+  apifunctions.forEach((funcName) => {
     ipcMain.handle(funcName, async (event, ...args) => {
       try {
-        return await dbcontroller[funcName](...args)
+        return await dbcontroller.api[funcName](...args)
       } catch(err) {
         console.error(`Error in ${funcName}:`, err);
         throw err; // Propaga el error al renderer si es necesario

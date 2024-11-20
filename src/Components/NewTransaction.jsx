@@ -30,15 +30,18 @@ export default function NewTransaction () {
         Category: parseInt(input.Category, 10), // Asegura que la categoría sea un número
         Type: input.Type,
         Account: input.Account,
-        Entity: input.Entity || null, // Si Entity está vacío, asigna null
+        Contact: input.Entity || null, // Si Entity está vacío, asigna null
         ExtraData: null, // Campo opcional con valor predeterminado null
         };
     }
 
 
     const onSubmit = (data) => {
+        console.log(data)
         dbfunctions.insertTransaction(adaptTransactionData(data)).then(res => console.log(res))
     }
+
+    React.useEffect(()=> console.log(errors), [errors])
 
     return(<>
 
@@ -50,15 +53,15 @@ export default function NewTransaction () {
             <Col>
                 <FormGroup>
                     <Form.Label>Fecha</Form.Label>
-                    <Form.Control type='date' name='date' {...register("Date")}/>
+                    <Form.Control type='date' name='Date' {...register("Date")}/>
                 </FormGroup>
                 <FormGroup>
                     <Form.Label>Periodo</Form.Label>
-                    <Form.Control type='month' name='period' placeholder='yyyy-mm' {...register("Period")}/>
+                    <Form.Control type='month' name='Period' placeholder='yyyy-mm' {...register("Period")}/>
                 </FormGroup>
                 <FormGroup>
                     <Form.Label>Monto</Form.Label>
-                    <Form.Control name='amount' {...register("Amount")} />
+                    <Form.Control name='Amount' {...register("Amount")} />
                 </FormGroup>
                 <Button type='submit'>ENviar</Button>
             </Col>

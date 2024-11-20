@@ -8,26 +8,25 @@ export function DatabaseProvider({ children }) {
     const [tables, setTables] = React.useState(null);
     const [error, setError] = React.useState(null);
   
-    const dbfunctions = Object.keys(window.dbcontroller).reduce((prev, funcName) => {
-      prev[funcName] = window.dbcontroller[funcName]
-      return prev
-    }, {})
+    const dbfunctions = window.api
   
     React.useEffect(() => {
-      if (loading && !tables) {
-        dbfunctions.getAllLists().then((res) => {
-          if (res.success) {
-            setTables(res.data);
-            setLoading(false);
-          } else {
-            setError(res.error);
-            setLoading(false);
-          }
-        }).catch((err) => {
+
+      async function loadTables() {
+        try {
+          const res = await dbfunctions.getTables()
+          res.map((e) => 1+1)
+          setTables(res);
+          setLoading(false);
+        } catch(err) {
           setError(`Error inesperado: ${err.message}`);
           setLoading(false);
-        });
+        }
+
       }
+
+      if (loading && !tables) loadTables()
+
     }, [tables, loading]);
   
     if (loading) {

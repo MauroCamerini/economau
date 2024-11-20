@@ -5,6 +5,7 @@ export default function CategorySelect({table, register}){
 
     const { data } = table
 
+
     /* Transforms a flat array of categories into a flat array with hierarchical captions. 
     Captions use spaces to indicate depth, maintaining parent-child order. */
     function flattenCategories(data) {

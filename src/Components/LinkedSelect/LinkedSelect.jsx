@@ -1,11 +1,22 @@
 import * as React from 'react'
-import CategorySelect from "./CategorySelect";
 import TableSelect from "./TableSelect";
+import { DatabaseContext } from '../../Context/DatabaseContext';
 
 export default function LinkedSelect({table, register}) {
 
-    return  (<> {table.hierarchy ? 
-        <CategorySelect table={table} register={register} /> 
-        : <TableSelect table={table} data={table.data} register={register}/>
-    }</>)
+    const {dbfunctions} = React.useContext(DatabaseContext)
+    const [data, setData] = React.useState(null)
+
+    React.useEffect(()=>{
+
+        async function loadData() {
+            setData(await dbfunctions.getListItems(table.name))
+        }
+
+        if(!data) loadData()
+    },[data])
+
+    if(!data) return (<>...</>)
+
+    return  (<TableSelect table={table} data={data} register={register}/>)
 }

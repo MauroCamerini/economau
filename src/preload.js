@@ -3,11 +3,11 @@
 
 
 const { contextBridge, ipcRenderer } = require("electron");
-import api from "./api";
+import {apifunctions} from "./apifunctions";
 
 contextBridge.exposeInMainWorld(
-    'dbcontroller',
-    api.reduce((prev, funcName) => {
+    'api',
+    apifunctions.reduce((prev, funcName) => {
         prev[funcName] = (...args) => ipcRenderer.invoke(funcName, ...args)
         return prev
     }, {})
