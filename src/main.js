@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('node:path');
 
-
+import Database from 'better-sqlite3';
 const { apifunctions } = require('./apifunctions');
 const { DBController } = require('./dbcontroller/dbcontroller');
 

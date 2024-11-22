@@ -8,11 +8,15 @@ export default function ShowAllTransactions() {
     React.useEffect(()=> {
 
         async function loadData() {
-            const newData = []
+
             const res = await dbfunctions.getAllTransactions()
-            console.log(res)
-            res.forEach(row => newData.push(`Fecha: ${row.Date} $ ${row.Amount} N° Categoría: ${row.Category}`))
-            setData(newData)
+            if(res.success){
+                const newData = []
+                console.log(res)
+                res.data.forEach(row => newData.push(`Fecha: ${row.Date} $ ${row.Amount} N° Categoría: ${row.Category}`))
+                setData(newData)
+            }
+
         }
         if(!data) loadData()
     }, [data])
@@ -20,7 +24,7 @@ export default function ShowAllTransactions() {
     if(!data) return (<>CARGANDO...</>)
 
     return (<>
-    <ul>{data.map((e=> <p>{e}</p>))}</ul>
+    <ul>{data.map(((e, i)=> <p key={data[i].ID} >{e}</p>))}</ul>
     
     </>)
 }

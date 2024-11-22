@@ -5,7 +5,6 @@ CREATE TABLE "Metadata" (
 	"HasInternalRecords"	INTEGER DEFAULT 0,
 	"TransactionField"	TEXT NOT NULL,
 	"IsRequired" INTEGER DEFAULT 0,
-	"ShouldCache"	INTEGER DEFAULT 0,
 	PRIMARY KEY("TableName")
 )
 
@@ -60,10 +59,10 @@ CREATE TABLE "Transactions" (
 	FOREIGN KEY("Type") REFERENCES "Types"("ID")
 )
 
-INSERT INTO Metadata (TableName, Title, TransactionField, ShouldCache, IsRequired) VALUES ("Accounts", "Cuenta", "Account", 1, 1);
-INSERT INTO Metadata (TableName, Title, TransactionField, IsHierarchical, HasInternalRecords, ShouldCache, IsRequired) VALUES ("Categories", "Categoría", "Category", 1, 1, 1, 1);
-INSERT INTO Metadata (TableName, Title, TransactionField, HasInternalRecords, ShouldCache, IsRequired) VALUES ("Types", "Tipo", "Type", 1, 1, 1);
-INSERT INTO Metadata (TableName, Title, TransactionField, ShouldCache, IsRequired) VALUES ("Contacts", "Contacto", "Contact", 1, 1);
+INSERT INTO Metadata (TableName, Title, TransactionField, IsRequired) VALUES ("Accounts", "Cuenta", "Account", 1);
+INSERT INTO Metadata (TableName, Title, TransactionField, IsHierarchical, HasInternalRecords, IsRequired) VALUES ("Categories", "Categoría", "Category", 1, 1, 1);
+INSERT INTO Metadata (TableName, Title, TransactionField, HasInternalRecords, IsRequired) VALUES ("Types", "Tipo", "Type", 1, 1);
+INSERT INTO Metadata (TableName, Title, TransactionField, IsRequired) VALUES ("Contacts", "Contacto", "Contact", 1);
 
 INSERT INTO Types (ID, Name, Internal) VALUES ("FIJ", "Fijo", 0);
 INSERT INTO Types (ID, Name, Internal) VALUES ("ORD", "Ordinario", 0);

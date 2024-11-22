@@ -6,7 +6,7 @@ import { NewTransactionSchema } from '../utils/schema'
 
 
 import { Button, Col, Container, Form, FormGroup, Row } from 'react-bootstrap';
-import ListSelector from './ListSelector';
+import LinkedFieldSelector from './LinkedFieldSelector';
 import { DatabaseContext } from '../Context/DatabaseContext';
 
 export default function NewTransaction () {
@@ -30,7 +30,7 @@ export default function NewTransaction () {
         Category: parseInt(input.Category, 10), // Asegura que la categoría sea un número
         Type: input.Type,
         Account: input.Account,
-        Contact: input.Entity || null, // Si Entity está vacío, asigna null
+        Contact: input.Contact === '' ? null : input.Contact , // Si Entity está vacío, asigna null
         ExtraData: null, // Campo opcional con valor predeterminado null
         };
     }
@@ -38,7 +38,10 @@ export default function NewTransaction () {
 
     const onSubmit = (data) => {
         console.log(data)
-        dbfunctions.insertTransaction(adaptTransactionData(data)).then(res => console.log(res))
+        console.log(
+            dbfunctions.insertTransaction(
+                adaptTransactionData(data)).then(res => console.log(res)
+            ))
     }
 
     React.useEffect(()=> console.log(errors), [errors])
@@ -49,7 +52,7 @@ export default function NewTransaction () {
         <h2>Cargar transacción</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
         <Row>
-            <Col><ListSelector register={register} setValue={setValue}/></Col>
+            <Col><LinkedFieldSelector register={register}/></Col>
             <Col>
                 <FormGroup>
                     <Form.Label>Fecha</Form.Label>

@@ -79,5 +79,5 @@ export const NewTransactionSchema = Yup.object().shape({
 	Contact: Yup.string().nullable(),
 	ExtraData: Yup.string('extr')
 	  .max(150, 'Los datos adicionales no pueden superar los 150 caracteres.')
-	  .nullable(), // Permitimos nulo ya que no es obligatorio
+	  .nullable()
   });
