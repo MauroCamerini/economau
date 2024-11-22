@@ -4,23 +4,7 @@ import { DatabaseContext } from '../Context/DatabaseContext';
 
 export default function LinkedFieldSelector({ register }) {
 
-    const [linkedFields, setLinkedFields] = React.useState()
-    const { dbfunctions } = React.useContext(DatabaseContext);
-
-    React.useEffect(()=> {
-
-      async function loadData() {
-        const res = await dbfunctions.getLinkedFields()
-        setLinkedFields(res.data)
-      }
-
-      if(!linkedFields) {
-        loadData()
-      }
-    }, [linkedFields])
-
-
-    if(!linkedFields) return (<>Cargando... </>)
+    const { linkedFields } = React.useContext(DatabaseContext);
 
     return (
       <div>

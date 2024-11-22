@@ -5,7 +5,7 @@ import { NewTransactionSchema } from '../utils/schema'
 
 
 
-import { Button, Col, Container, Form, FormGroup, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import LinkedFieldSelector from './LinkedFieldSelector';
 import { DatabaseContext } from '../Context/DatabaseContext';
 
@@ -16,8 +16,7 @@ export default function NewTransaction () {
     const {
             register,
             handleSubmit,
-            setValue,
-            formState: { errors },
+            formState: { errors, isSubmitted  },
         } = useForm({
             resolver: yupResolver(NewTransactionSchema),
         })
@@ -37,14 +36,11 @@ export default function NewTransaction () {
 
 
     const onSubmit = (data) => {
-        console.log(data)
-        console.log(
-            dbfunctions.insertTransaction(
-                adaptTransactionData(data)).then(res => console.log(res)
-            ))
+        console.log(errors)
+        dbfunctions.insertTransaction(
+            adaptTransactionData(data)).then(res => console.log(res)
+        )
     }
-
-    React.useEffect(()=> console.log(errors), [errors])
 
     return(<>
 
@@ -52,24 +48,41 @@ export default function NewTransaction () {
         <h2>Cargar transacción</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
         <Row>
-            <Col><LinkedFieldSelector register={register}/></Col>
+            
             <Col>
-                <FormGroup>
+                <Form.Group controlId='formDate'>
                     <Form.Label>Fecha</Form.Label>
-                    <Form.Control type='date' name='Date' {...register("Date")}/>
-                </FormGroup>
-                <FormGroup>
+                    <Form.Control 
+                        type='date' 
+                        isInvalid={isSubmitted && !!errors.Date}
+                        {...register("Date")}
+                        />
+                    <Form.Control.Feedback type='invalid'>{errors.Date?.message}</Form.Control.Feedback>
+                </Form.Group>
+                
+                <Form.Group>
                     <Form.Label>Periodo</Form.Label>
-                    <Form.Control type='month' name='Period' placeholder='yyyy-mm' {...register("Period")}/>
-                </FormGroup>
-                <FormGroup>
+                    <Form.Control 
+                        type='month'
+                        name='Period'
+                        placeholder='yyyy-mm' 
+                        isInvalid={isSubmitted && !!errors.Period}
+                        {...register("Period")}
+                        />
+                    <Form.Control.Feedback type='invalid'>{errors.Period?.message}</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group>
                     <Form.Label>Monto</Form.Label>
-                    <Form.Control name='Amount' {...register("Amount")} />
-                </FormGroup>
+                    <Form.Control 
+                        name='Amount'
+                        isInvalid={isSubmitted && !!errors.Amount}
+                        {...register("Amount")} />
+                        <Form.Control.Feedback type='invalid'>{errors.Amount?.message}</Form.Control.Feedback>
+                </Form.Group>
                 <Button type='submit'>ENviar</Button>
             </Col>
+            <Col><LinkedFieldSelector register={register} /></Col>
         </Row>
-        {errors && <h2>ERROR EN EL FORM</h2>}
         </Form>
         </Container>
             
