@@ -6,7 +6,7 @@ import { NewTransactionSchema } from '../utils/schema'
 
 
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-import LinkedFieldSelector from './LinkedFieldSelector';
+import LinkedFieldSelector from '../Components/LinkedFieldSelector';
 import { DatabaseContext } from '../Context/DatabaseContext';
 
 export default function NewTransaction () {

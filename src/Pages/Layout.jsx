@@ -1,16 +1,15 @@
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
-import { Link, Outlet } from 'react-router-dom';
-import NewTransaction from '../Components/NewTransaction';
+import { Outlet } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import MainNavbar from '../UI/MainNavbar';
+
 
 export default function Layout () {
     
     return (<>
-    <h1>ECONOMAU</h1>
-    <div><ul>
-        <li><Link to="/">New transaction</Link></li>
-        <li><Link to="getall">Get all transactions</Link></li>
-    </ul></div>
-        <Outlet />
+        <MainNavbar />
+        <Container className="container-lg mt-4" >
+            <Outlet />
+        </Container>
     </>)
 }
