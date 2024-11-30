@@ -2,7 +2,11 @@
  * DBController.api function names, exposed in main world via prerender.
  */
 export const apifunctions = [
-    "insertTransaction",
-    "getAllTransactions",
-    "getLinkedFields",
+        "insertTrx",
+        "getAllTrx",
+        "getLinkedFields",
+        "updateTrxByID",
+        "deleteTrxByID",
+        "filterTrx",
+        "getTrxFields"
 ]

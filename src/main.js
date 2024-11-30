@@ -1,7 +1,8 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('node:path');
 
 import Database from 'better-sqlite3';
+import { createDB, dbExixts } from './db/createdb';
 const { apifunctions } = require('./apifunctions');
 const { DBController } = require('./dbcontroller/dbcontroller');
 
@@ -27,11 +28,45 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
 };
 
+/**
+ * Checks if the database file exists.
+ * If not, asks the users if they want to create it.
+ */
+const isDatabaseReady = () => {
+
+  try {
+    if(!dbExixts()){
+      const res = dialog.showMessageBoxSync({
+        title: "Archivo de DB no encontrado",
+        message: "No se encuentra el archivo de base de datos ¿Desea crearlo o salir de la aplicación?",
+        buttons: ["Crear", "Salir"],
+        defaultId: 0, cancelId: 1,
+        type: "question"
+      })
+
+      if(!res) {
+        createDB()
+      }
+      
+    } 
+  } catch (e) {
+    dialog.showErrorBox(
+      "Error al generar el archivo de Base de Datos",
+      "No se pudo abrir o crear la DB." + e.message)
+      return false
+    
+  }
+
+  return true
+
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
 
+  if(!isDatabaseReady()) app.quit()
   const dbcontroller = new DBController()
 
   apifunctions.forEach((funcName) => {

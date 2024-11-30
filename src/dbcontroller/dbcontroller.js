@@ -1,19 +1,25 @@
 import Database from 'better-sqlite3';
 import * as Transactions from './transactions';
 import { readRecords } from './crud';
+import { dbConfig } from '../db.config';
+
 
 /**
  * Initializes de DB and exposes an API meant to be reached by render process
  */
 export class DBController {
     constructor() {
-        this.db = new Database('createdb.db', { verbose: console.log })
+        this.db = new Database(dbConfig.fileName, { fileMustExist: true })
         this.db.pragma('journal_mode = WAL');
 
         this.api = {
-            insertTransaction: this.insertTransaction.bind(this),
-            getAllTransactions: this.getAllTransactions.bind(this),
+            insertTrx: this.insertTrx.bind(this),
+            getAllTrx: this.getAllTrx.bind(this),
             getLinkedFields: this.getLinkedFields.bind(this),
+            updateTrxByID: this.updateTrxByID.bind(this),
+            deleteTrxByID: this.deleteTrxByID(this),
+            filterTrx: this.filterTrx.bind(this),
+            getTrxFields: this.getTrxFields.bind(this)
         }
     }
 
@@ -34,7 +40,7 @@ export class DBController {
 
     }
 
-    async insertTransaction(data) {
+    async insertTrx(data) {
         try {
             const info = await Transactions.insert(this.db, data)
             return { success: true, info }
@@ -43,7 +49,7 @@ export class DBController {
         }
     }
 
-    async getAllTransactions() {
+    async getAllTrx() {
         try {
             const data = await Transactions.getAll(this.db)
             return { success: true, data }
@@ -52,4 +58,39 @@ export class DBController {
         }
     }
 
+    async updateTrxByID(id, data) {
+        try {
+            const info = await Transactions.updateById(this.db, id, data)
+            return { success: true, info}
+        } catch (error) {
+            return { success: false, error: error.message}
+        }
+    }
+
+    async deleteTrxByID(id) {
+        try {
+            const info = await Transactions.deleteById(this.db, id)
+            return { success: true, info}
+        } catch (error) {
+            return { success: false, error: error.message}
+        }
+    }
+
+    async filterTrx(filters) {
+        try {
+            const data = await Transactions.filter(this.db, filters)
+            return { success: true, data}
+        } catch (error) {
+            return { success: false, error: error.message}
+        }
+    }
+
+    async getTrxFields () {
+        try {
+            const data = await Transactions.getFields(this.db)
+            return { success: true, data}
+        } catch (error) {
+            return { success: false, error: error.message}
+        }
+    }
 }

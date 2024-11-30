@@ -1,6 +1,9 @@
 
 import * as React from "react"
 
+/**
+ * Exposes database api and general data.
+ */
 export const DatabaseContext = React.createContext()
 
 /**
@@ -11,6 +14,7 @@ export function DatabaseProvider({ children }) {
     const [error, setError] = React.useState(null);
 
     const [linkedFields, setLinkedFields] = React.useState(null)
+    const [trxFields, setTrxFields] = React.useState(null)
   
     const dbfunctions = window.api
 
@@ -19,7 +23,6 @@ export function DatabaseProvider({ children }) {
      */
     const loadLinkedFields = React.useCallback(async () => {
 
-      setLoading(true)
       const res = await dbfunctions.getLinkedFields()
 
       if(res.success){
@@ -33,14 +36,39 @@ export function DatabaseProvider({ children }) {
     }, [])
 
     /**
-     * Loads the linked fields in the first render
+     * Loads the linked fields and transactions fields in the first render
      */
     React.useEffect(()=> {
+
 
       if(!linkedFields) {
         loadLinkedFields()
       }
-    }, [linkedFields])
+
+      if(!trxFields) {
+        loadTrxFields()
+      }
+
+      if(linkedFields && trxFields) {
+        setLoading(false)
+      }
+
+    }, [linkedFields, trxFields])
+
+    /**
+     * Loads the Transactions table column names
+     */
+    const loadTrxFields = React.useCallback(async () => {
+
+      const res = await dbfunctions.getTrxFields()
+      if(res.success){
+        setTrxFields(res.data)
+        setError(null)
+      } else {
+        setError(res.error)
+      }
+
+    }, [trxFields])
 
     if(loading) return (<>CARGANDO...</>)
 

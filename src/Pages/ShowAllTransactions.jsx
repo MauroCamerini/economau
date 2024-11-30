@@ -1,23 +1,18 @@
 import * as React from 'react'
 import { DatabaseContext } from '../Context/DatabaseContext'
-import { expandTransactionFields } from '../utils/ui'
+import TransactionTable from '../Components/TransactionTable/TransactionTable'
 
 export default function ShowAllTransactions() {
-    const { dbfunctions, linkedFields } = React.useContext(DatabaseContext)
+    const { dbfunctions } = React.useContext(DatabaseContext)
     const [data, setData] = React.useState(null)
 
     React.useEffect(()=> {
 
         async function loadData() {
 
-            const res = await dbfunctions.getAllTransactions()
+            const res = await dbfunctions.getAllTrx()
             if(res.success){
-                const newData = []
-
-                res.data.forEach(row => {
-                    newData.push(expandTransactionFields(row, linkedFields))
-                })
-                setData(newData)
+                setData(res.data)
             }
 
         }
@@ -27,7 +22,6 @@ export default function ShowAllTransactions() {
     if(!data) return (<>CARGANDO...</>)
 
     return (<>
-    <ul>{data.map(((e, i)=> <p key={data[i].ID} >Fecha: {e.Date} Período: {e.Period} Monto: {e.Amount} Categoria: {e.Category.Name}</p>))}</ul>
-    
+        <TransactionTable trxList={data} />
     </>)
 }

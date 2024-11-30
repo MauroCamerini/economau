@@ -48,3 +48,21 @@ export function expandTransactionFields(transaction, linkedFields) {
     return expanded
 
 }
+
+/** Returns the transaction data formatted to be sent to the db functions insert or update
+ * 
+ * @param {Object} input - The result of resolving TransactionDataSchema
+ * @returns 
+ */
+export function adaptTransactionData(input) {
+  return {
+    Date: input.Date,     // YYYY-DD-MM
+    Period: input.Period,  // YYYY-DD-01
+    Amount: parseInt(input.Amount.replace('.', ''), 10),  // Amount is stored as cents in the DB
+    Category: parseInt(input.Category, 10),               // It has to be a number
+    Type: input.Type,
+    Account: input.Account,
+    Contact: input.Contact === '' ? null : input.Contact , // null value if empty
+    ExtraData: null, // Don't used so far
+  }
+}

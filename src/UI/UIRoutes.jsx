@@ -6,7 +6,6 @@ import { Routes, Route } from 'react-router-dom';
 
 const renderRoutes = (routes) => 
     routes.map((route) => {
-        console.log(route)
         if(route.children) { //It means has children
             return React.createElement(
                 Route,
