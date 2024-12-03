@@ -1,7 +1,7 @@
 import Database from 'better-sqlite3';
 import * as Transactions from './transactions';
 import { readRecords } from './crud';
-import { dbConfig } from '../db.config';
+import { dbConfig } from '../config/db.config';
 
 
 /**

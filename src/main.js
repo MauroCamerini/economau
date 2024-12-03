@@ -1,9 +1,8 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('node:path');
 
-import Database from 'better-sqlite3';
-import { createDB, dbExixts } from './db/createdb';
-const { apifunctions } = require('./apifunctions');
+import { createDB, dbExixts } from './utils/createdb';
+const { apifunctions } = require('./config/api.config');
 const { DBController } = require('./dbcontroller/dbcontroller');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -52,7 +51,7 @@ const isDatabaseReady = () => {
   } catch (e) {
     dialog.showErrorBox(
       "Error al generar el archivo de Base de Datos",
-      "No se pudo abrir o crear la DB." + e.message)
+      "No se pudo abrir o crear la DB. " + e.message)
       return false
     
   }
@@ -67,6 +66,7 @@ const isDatabaseReady = () => {
 app.whenReady().then(() => {
 
   if(!isDatabaseReady()) app.quit()
+    
   const dbcontroller = new DBController()
 
   apifunctions.forEach((funcName) => {
@@ -78,6 +78,11 @@ app.whenReady().then(() => {
         throw err; // Propaga el error al renderer si es necesario
       }
     })
+  })
+
+  // Closes the DB on quitting.
+  app.on('quit', () => {
+    dbcontroller.db.close()
   })
   
   createWindow();

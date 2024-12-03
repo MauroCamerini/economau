@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { DatabaseContext } from '../Context/DatabaseContext'
 import TransactionTable from '../Components/TransactionTable/TransactionTable'
+import { Row, Stack } from 'react-bootstrap'
+import Filters from '../Components/Filters/Filters'
 
 export default function ShowAllTransactions() {
     const { dbfunctions } = React.useContext(DatabaseContext)
@@ -22,6 +24,10 @@ export default function ShowAllTransactions() {
     if(!data) return (<>CARGANDO...</>)
 
     return (<>
-        <TransactionTable trxList={data} />
+        <Stack gap="3"> 
+            <Filters />
+            <TransactionTable trxList={data} />
+        </Stack>
+        
     </>)
 }

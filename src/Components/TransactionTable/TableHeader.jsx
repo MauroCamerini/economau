@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { transactionTableConfig } from '../../UI/ui.config'
+import { transactionTableConfig } from '../../config/ui.config'
 
 
 export default function TableHeader() {

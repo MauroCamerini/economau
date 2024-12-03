@@ -64,8 +64,10 @@ export default function TransactionForm({trxID, submitResult}) {
         <Container>
         <h2>Cargar transacción</h2>
         <Form onSubmit={handleSubmit(onSubmit)}>
-        <Row>
-            
+        <Row className='mt-4'>
+            <Col><LinkedFieldSelector register={register} /></Col>
+        </Row>
+        <Row className='mt-4'>
             <Col>
                 <Form.Group>
                     <Form.Label>Fecha</Form.Label>
@@ -76,7 +78,8 @@ export default function TransactionForm({trxID, submitResult}) {
                         />
                     <Form.Control.Feedback type='invalid'>{errors.Date?.message}</Form.Control.Feedback>
                 </Form.Group>
-                
+            </Col>
+            <Col>
                 <Form.Group>
                     <Form.Label>Periodo</Form.Label>
                     <Form.Control 
@@ -88,6 +91,9 @@ export default function TransactionForm({trxID, submitResult}) {
                         />
                     <Form.Control.Feedback type='invalid'>{errors.Period?.message}</Form.Control.Feedback>
                 </Form.Group>
+
+            </Col>
+            <Col>
                 <Form.Group>
                     <Form.Label>Monto</Form.Label>
                     <Form.Control 
@@ -96,9 +102,11 @@ export default function TransactionForm({trxID, submitResult}) {
                         {...register("Amount")} />
                         <Form.Control.Feedback type='invalid'>{errors.Amount?.message}</Form.Control.Feedback>
                 </Form.Group>
-                <Button type='submit'>ENviar</Button>
             </Col>
-            <Col><LinkedFieldSelector register={register} /></Col>
+
+            <Col className='d-flex justify-content-center align-items-center'>
+                <Button type='submit'>Agregar</Button>
+            </Col>
         </Row>
         </Form>
         </Container>

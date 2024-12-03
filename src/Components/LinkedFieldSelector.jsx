@@ -1,20 +1,23 @@
 import * as React from 'react'
 import SelectLinkedField from './SelectLinkedField';
 import { DatabaseContext } from '../Context/DatabaseContext';
+import { Container, Col, Row } from "react-bootstrap";
 
 export default function LinkedFieldSelector({ register }) {
 
     const { linkedFields } = React.useContext(DatabaseContext);
 
     return (
-      <div>
+        <Row>
         {linkedFields.map((linkedField) => (
-          <SelectLinkedField
-            key={linkedField.TableName}
-            linkedField={linkedField}
-            register={register}
-          />
+          <Col key={linkedField.TableName}>
+            <SelectLinkedField
+              
+              linkedField={linkedField}
+              register={register}
+            />
+          </Col>
         ))}
-      </div>
+        </Row>
     );
   }

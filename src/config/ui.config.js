@@ -43,17 +43,19 @@ export const mainNavbarConfig = [
 
 export const transactionTableConfig = {
     columns: [
-        {title: "Fecha", field: "Date"},
-        {title: "Mes", field: "Period"},
+        {title: "Fecha", field: "Date", filter: "range"},
+        {title: "Mes", field: "Period", filter: "range"},
         {
             title: "Monto", 
             field: "Amount", 
             // amount is stored as cents, so we need to add the . and for 2 decimal points
-            format: (num) => `${num < 0 ? '-' : ''}${Math.abs(num).toString().padStart(3, '0').slice(0, -2) || 0}.${Math.abs(num).toString().padStart(3, '0').slice(-2)}`
-            //format: (num) => (num < 0 ? '-' : '') + (Math.abs(num) / 100).toFixed(2).slice(0, -3)
+            format: (num) => `${num < 0 ? '-' : ''}${Math.abs(num).toString().padStart(3, '0').slice(0, -2) || 0}.${Math.abs(num).toString().padStart(3, '0').slice(-2)}`,
         },
-        {title: "Categoría", field: "Category", },
-        {title: "Tipo", field: "Type", linkedName: "ID"},
-        {title: "Cuenta", field: "Account", linkedName: "ID"},
+        {title: "Categoría", field: "Category", filter: "in", 
+            /* Usefull when comparing data from a controlled input and data parsed from the DB */
+            parse: value => parseInt(value)
+        },
+        {title: "Tipo", field: "Type", linkedName: "ID", filter: "in", parse: value => value},
+        {title: "Cuenta", field: "Account", linkedName: "ID", filter: "in", parse: value => parseInt(value)},
     ]
 }

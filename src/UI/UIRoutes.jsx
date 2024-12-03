@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { routesConfig } from './ui.config';
-import { pages } from './pages';
+import { routesConfig } from '../config/ui.config';
+import { pages } from '../config/pages.config';
 import { Routes, Route } from 'react-router-dom';
 
 

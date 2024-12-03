@@ -3,7 +3,7 @@
 
 
 const { contextBridge, ipcRenderer } = require("electron");
-import {apifunctions} from "./apifunctions";
+import { apifunctions } from "./config/api.config";
 
 contextBridge.exposeInMainWorld(
     'api',

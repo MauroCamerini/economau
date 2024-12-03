@@ -1,7 +1,7 @@
 import Database from 'better-sqlite3'
-import createTables from './createTables.sql'
+import createDBQuery from '../sql/createdb.sql'
 import fs from 'node:fs'
-import { dbConfig } from '../db.config'
+import { dbConfig } from '../config/db.config'
 
 
 /**
@@ -13,8 +13,8 @@ export const dbExixts = () => fs.existsSync(dbConfig.fileName)
  * Creates de tables and inserts default data.
  */
 export function createDB() {
-    const queries = createTables.split(';')
+    const queries = createDBQuery.split(';')
     const db = new Database(dbConfig.fileName, {verbose: console.log})
-    db.exec(createTables)
+    db.exec(createDBQuery)
     db.close()
 }

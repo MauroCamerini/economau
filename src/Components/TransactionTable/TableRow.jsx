@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { transactionTableConfig } from '../../UI/ui.config'
+import { transactionTableConfig } from '../../config/ui.config'
 import { DatabaseContext } from '../../Context/DatabaseContext'
 
 const buildCaption = (trx, column, linkedFields) => {

@@ -61,7 +61,7 @@ CREATE TABLE "Transactions" (
 INSERT INTO Metadata (TableName, Title, TransactionField, IsRequired) VALUES ('Accounts', 'Cuenta', 'Account', 1);
 INSERT INTO Metadata (TableName, Title, TransactionField, IsHierarchical, HasInternalRecords, IsRequired) VALUES ('Categories', 'Categoría', 'Category', 1, 1, 1);
 INSERT INTO Metadata (TableName, Title, TransactionField, HasInternalRecords, IsRequired) VALUES ('Types', 'Tipo', 'Type', 1, 1);
-INSERT INTO Metadata (TableName, Title, TransactionField, IsRequired) VALUES ('Contacts', 'Contacto', 'Contact', 1);
+INSERT INTO Metadata (TableName, Title, TransactionField, IsRequired) VALUES ('Contacts', 'Contacto', 'Contact', 0);
 
 INSERT INTO Accounts (ID, Name) VALUES 
 	('CASH', 'Efectivo'),
