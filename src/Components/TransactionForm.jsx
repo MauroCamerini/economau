@@ -49,11 +49,11 @@ export default function TransactionForm({trxID, submitResult}) {
 
         async function executeAction(data) {
             const adaptedData = adaptTransactionData(data)
-            const res = !!trxID ? 
+            const res = trxID ? 
                 await dbfunctions.updateTrx(trxID, adaptedData)
                 :
                 await dbfunctions.insertTrx(adaptedData)
-            if(submitResult) submitResult(data, res)
+            if(submitResult) submitResult(adaptedData, res)
         }
         executeAction(data)
 

@@ -1,18 +1,20 @@
 import * as React from 'react';
 import TransactionForm from '../Components/TransactionForm'
 import TransactionTable from '../Components/TransactionTable/TransactionTable'
+import { Stack } from 'react-bootstrap';
 
 
 export default function NewTransaction () {
 
-    const [trxList, setTrxList] = React.useState([])
+    const [transactions, setTransactions] = React.useState([])
     const [message, setMessage] = React.useState("")
 
     const afterSubmit = (data, res) => {
         if(res.success) {
-            console.log(data, res)
-            setMessage("Transacción agregada con éxito")
-            setTrxList((prev) => [...prev, {...data, ID: res.lastInsertRowid}])
+
+            setMessage("")
+            data.ID = res.info.lastInsertRowid
+            setTransactions((prev) => [...prev, {...data}])
         } else {
             setMessage(`ERROR: ${res.error}`)
         }
@@ -20,10 +22,13 @@ export default function NewTransaction () {
     }
 
     return(<>
-        <TransactionForm submitResult={afterSubmit}/>
-        <p>{message}</p>
-        <div>
-            <TransactionTable trxList={trxList} />
-        </div>
+        <Stack gap={3}>
+            <TransactionForm submitResult={afterSubmit}/>
+            <div className='text-center fs-5 text-danger'>{message}</div>
+            {transactions.length > 0 && <div>
+                <div className='text-center fs-5'>Transacciones agregadas</div>
+                <TransactionTable transactions={transactions} />
+            </div>} 
+        </Stack>
     </>)
 }

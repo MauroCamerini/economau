@@ -63,6 +63,6 @@ export function adaptTransactionData(input) {
     Type: input.Type,
     Account: input.Account,
     Contact: input.Contact === '' ? null : input.Contact , // null value if empty
-    ExtraData: null, // Don't used so far
+    ExtraData: null, // Not used so far
   }
 }
