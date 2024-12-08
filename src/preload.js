@@ -3,11 +3,11 @@
 
 
 const { contextBridge, ipcRenderer } = require("electron");
-import { apifunctions } from "./config/api.config";
+import { ipcFunctionsNames } from "./ipc.config";
 
 contextBridge.exposeInMainWorld(
-    'api',
-    apifunctions.reduce((prev, funcName) => {
+    'ipc',
+    ipcFunctionsNames.reduce((prev, funcName) => {
         prev[funcName] = (...args) => ipcRenderer.invoke(funcName, ...args)
         return prev
     }, {})

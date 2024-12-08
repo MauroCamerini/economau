@@ -1,9 +1,10 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('node:path');
 
-import { createDB, dbExixts } from './utils/createdb';
-const { apifunctions } = require('./config/api.config');
-const { DBController } = require('./dbcontroller/dbcontroller');
+import { createDB, dbExixts, openDB } from './main/db';
+
+import ipcFunctions from './main/ipc';
+const { ipcFunctionsNames } = require('./ipc.config');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -65,24 +66,25 @@ const isDatabaseReady = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
 
-  if(!isDatabaseReady()) app.quit()
+  if(!isDatabaseReady()) 
+    app.quit()
     
-  const dbcontroller = new DBController()
+  const db = openDB()
 
-  apifunctions.forEach((funcName) => {
+  ipcFunctionsNames.forEach((funcName) => {
     ipcMain.handle(funcName, async (event, ...args) => {
       try {
-        return await dbcontroller.api[funcName](...args)
+        return await ipcFunctions[funcName](db, ...args)
       } catch(err) {
         console.error(`Error in ${funcName}:`, err);
-        throw err; // Propaga el error al renderer si es necesario
+        throw err; 
       }
     })
   })
 
   // Closes the DB on quitting.
   app.on('quit', () => {
-    dbcontroller.db.close()
+    db.close()
   })
   
   createWindow();
