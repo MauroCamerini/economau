@@ -1,4 +1,5 @@
-import { insertRecord, readRecords } from "./crud"
+import { executeQuery, insertRecord, readRecords } from "./crud"
+import { dynamicViews } from "./db.config"
 
 async function newTransaction(db, data) {
 
@@ -19,7 +20,10 @@ async function newTransaction(db, data) {
 
 async function getData(db, table, filters) {
     try {
-        const data = readRecords(db, table, filters)
+        const data = dynamicViews[table] 
+            ? executeQuery(db, dynamicViews[table].query, filters) 
+            : readRecords(db, table, filters)
+
         return {
             success: true,
             data

@@ -1,18 +1,18 @@
 import * as React from 'react'
 
 import { Stack } from 'react-bootstrap'
-import { TransactionsProvider } from '../Context/TransactionsContext'
+import { FilteredDataProvider } from '../Context/FilteredDataContext'
 import Filters from '../Components/Filters/Filters'
-import TransactionLoader from '../Components/Filters/TransactionsLoader'
+import ViewLoader from '../Components/ViewLoader'
 
 export default function ViewTransactions() {
 
     return (<>
-        <TransactionsProvider>
+        <FilteredDataProvider tableName='transactions_view'>
         <Stack gap="3"> 
             <Filters />
-            <TransactionLoader />
+            <ViewLoader />
         </Stack>
-        </TransactionsProvider>
+        </FilteredDataProvider>
     </>)
 }

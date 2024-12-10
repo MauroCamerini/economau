@@ -24,7 +24,6 @@ export function createDB() {
  */
 export function openDB() {
     const db = new Database(dbConfig.fileName, { fileMustExist: true })
-    db.pragma('journal_mode = WAL')
 
     return db
 }

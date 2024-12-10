@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Form, Stack } from 'react-bootstrap'
-import { TransactionsContext } from '../../Context/TransactionsContext'
+import { FilteredDataContext } from '../../Context/FilteredDataContext'
 
 export default function RangeFilter({field, filter , disabled}) {
     
-    const {addFilter, removeFilter } = React.useContext(TransactionsContext)
+    const {addFilter, removeFilter } = React.useContext(FilteredDataContext)
 
     const [fromValue, setFromValue] = React.useState('')
     const [toValue, setToValue] = React.useState('')

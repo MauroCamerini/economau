@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Button } from 'react-bootstrap'
-import { TransactionsContext } from '../../Context/TransactionsContext'
+import { Button, ButtonGroup, Col, Form, Row } from 'react-bootstrap'
+import { FilteredDataContext } from '../../Context/FilteredDataContext'
 
 
 export default function SignFilter({field, disabled}) {
     const [sign, setSign] = React.useState(null)
 
-    const { addFilter, removeFilter } = React.useContext(TransactionsContext)
+    const { addFilter, removeFilter } = React.useContext(FilteredDataContext)
 
     React.useEffect(()=> {
         if(disabled) {
@@ -31,14 +31,24 @@ export default function SignFilter({field, disabled}) {
     }
 
     return (<>
-
+        <ButtonGroup>
+            <Button variant={disabled ? 
+                    'secondary' : ((sign === 'positive') ? "success" : "danger")
+                }
+                disabled>
+                {disabled ? 
+                    'Sin filtro' : ((sign === 'positive') ? "Ingresos" : "Gastos")
+                }
+            </Button>
             <Button 
-                variant={disabled ? '' : ( (sign === 'positive') ? 'success' : 'danger')}
                 onClick={handleClick}
                 size="sm"
                 disabled={disabled}
+                variant='secondary'
                 >
-                    {disabled ? 'Sin filtro' : ((sign === 'positive') ? "Ingresos" : "Gastos") }
+                    ↹
                 </Button>
+        </ButtonGroup>
+
     </>)
 }

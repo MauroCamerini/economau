@@ -5,6 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import LinkedFieldSelector from './LinkedFieldSelector';
 import { TransactionFormSchema } from './TransactionFormSchema';
+import { labels } from '../../config';
+
+
 
 export default function TransactionForm({onDBResponse}) {
 
@@ -38,7 +41,7 @@ export default function TransactionForm({onDBResponse}) {
         <Row className='mt-4'>
             <Col>
                 <Form.Group>
-                    <Form.Label>Fecha</Form.Label>
+                    <Form.Label>{labels.transactions_view.date}</Form.Label>
                     <Form.Control 
                         type='date' 
                         isInvalid={isSubmitted && !!errors.date}
@@ -49,7 +52,7 @@ export default function TransactionForm({onDBResponse}) {
             </Col>
             <Col>
                 <Form.Group>
-                    <Form.Label>Periodo</Form.Label>
+                    <Form.Label>{labels.transactions_view.period}</Form.Label>
                     <Form.Control 
                         type='month'
                         placeholder='yyyy-mm' 
@@ -62,7 +65,7 @@ export default function TransactionForm({onDBResponse}) {
             </Col>
             <Col>
                 <Form.Group>
-                    <Form.Label>Monto</Form.Label>
+                    <Form.Label>{labels.transactions_view.amount}</Form.Label>
                     <Form.Control 
                         isInvalid={isSubmitted && !!errors.amount}
                         {...register("amount")} />

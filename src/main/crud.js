@@ -138,6 +138,13 @@ export function deleteRecord(db, tableName, filters) {
     return { success: true, info };
 }
 
+export function executeQuery(db, query, params) {
+
+    const stmt = db.prepare(query);
+
+    return stmt.all(params)
+}
+
 /**
  * Reads records from the specified table based on provided filters.
  *
@@ -162,3 +169,4 @@ export function readRecords(db, tableName, filters = {}) {
     return stmt.all(whereClause.params)
 
 }
+

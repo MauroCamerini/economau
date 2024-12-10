@@ -199,6 +199,11 @@ AS
 SELECT "id", "name", "description"
 FROM accounts;
 
+CREATE VIEW period_items
+AS
+SELECT DISTINCT "period"
+FROM transactions;
+
 --------------
 -- TRIGGERS --
 --------------

@@ -1,16 +1,16 @@
 import * as React from 'react'
 import useAsyncData from '../Hooks/useAsyncData'
-import { Table } from 'react-bootstrap'
+import ViewTable from '../Components/ViewTable/ViewTable'
+
+const TABLE_NAME = 'income_statement'
 
 export default function IncomeStatement() {
     
-    const { loading, data, error } = useAsyncData('income_statement')
+    const { loading, data, error } = useAsyncData(TABLE_NAME)
 
     if(loading) return <div>Cargando...</div>
 
     if(error) return <div>Error: {error}</div>
 
-    return (<>
-        {JSON.stringify(data)}
-    </>)
+    return (<ViewTable data={data} tableName={TABLE_NAME} />)
 }

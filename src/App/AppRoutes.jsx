@@ -7,7 +7,8 @@ import Layout from './Pages/Layout'
 import Home from './Pages/Home'
 import NewTransaction from './Pages/NewTransaction'
 import ViewTransactions from './Pages/ViewTransactions'
-import IncomeStatement from './Pages/IncomeStatement'
+import View from './Pages/View';
+import ViewByPeriod from './Pages/ViewByPeriod';
 
 export default function AppRoutes() {
     return (
@@ -15,8 +16,9 @@ export default function AppRoutes() {
         <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
             <Route path='new' element={<NewTransaction />} />
-            <Route path='view' element={<ViewTransactions />} />
-            <Route path='incstmt' element={<IncomeStatement />} />
+            <Route path='transactions' element={<ViewTransactions />} />
+            <Route path='view/:table' element={<View />} />
+            <Route path='byperiod/:table' element={<ViewByPeriod />} />
         </Route>
         </Routes>
     )

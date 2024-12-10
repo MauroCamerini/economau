@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Form } from 'react-bootstrap'
-import { TransactionsContext } from '../../Context/TransactionsContext'
+import { FilteredDataContext } from '../../Context/FilteredDataContext'
 import useAsyncData from '../../Hooks/useAsyncData'
 
 const ALL_VALUE = "*ALL"
@@ -15,7 +15,7 @@ export default function InFilter({field, disabled}) {
     const [picked, setPicked] = React.useState(null)
     const { loading, data: items, error } = useAsyncData(`${field}_items`)
 
-    const { addFilter, removeFilter } = React.useContext(TransactionsContext)
+    const { addFilter, removeFilter } = React.useContext(FilteredDataContext)
 
 
     const handleSelectChange = React.useCallback((event) => {

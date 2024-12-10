@@ -3,6 +3,7 @@ import { Form, Stack } from "react-bootstrap";
 import InFilter from "./InFilter";
 import RangeFilter from "./RangeFilter";
 import SignFilter from "./SignFilter";
+import { labels } from "../../config";
 
 
 /**
@@ -16,9 +17,8 @@ export default function FilterSwitch({field, filter}) {
     }
 
     return(<>
-        <Stack>
-
-                <Form.Switch onChange={handleSwitchChange} label={field}/>
+        <Stack gap={3}>
+                <Form.Switch onChange={handleSwitchChange} label={labels.transactions_view[field]}/>
                 {filter === "in"        && <InFilter field={field} disabled={disabled} />}
                 {filter === "range"     && <RangeFilter field={field} disabled={disabled} />}
                 {filter === "sign"      && <SignFilter field={field} disabled={disabled} />}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Form } from 'react-bootstrap';
 import useAsyncData from '../../Hooks/useAsyncData';
+import { labels } from '../../config';
 
 
 
@@ -14,7 +15,7 @@ export default function SelectLinkedField({linkedField, register}){
 
     return (
         <Form.Group>
-            <Form.Label>{linkedField.table_name}</Form.Label>
+            <Form.Label>{labels.transactions_view[linkedField.field_name]}</Form.Label>
             <Form.Control 
                 as="select" 
                 {...register(linkedField.field_name)} 
