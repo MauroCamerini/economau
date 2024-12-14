@@ -10,8 +10,10 @@ export default function SignFilter({field, disabled}) {
 
     React.useEffect(()=> {
         if(disabled) {
-            setSign(null)
-            removeFilter(field)
+            if(sign) {
+                setSign(null)
+                removeFilter(field)
+            }
         } else {
             setSign('negative')
         }
@@ -20,7 +22,7 @@ export default function SignFilter({field, disabled}) {
 
     React.useEffect(()=> {
 
-        if(!disabled) {
+        if(!disabled && sign) {
             addFilter(field, 'sign', sign)
         }
 

@@ -1,3 +1,9 @@
+/**
+ * General configuration file for the UI.
+ * Describes the main nav bar, and how each table must render.
+ * @module config
+ */
+
 
 export const APP_LANGUAGE = 'es-ES'
 
@@ -27,6 +33,11 @@ export const filtersConfig = {
     account: 'in'
 
 }
+
+/**
+ * Returns value in the correct data type. Currently category is number, and type and acccount are string
+ */
+export const toInFilterValue = (field, value) => field === 'category' ? parseInt(value) : value
 
 /*
     
@@ -101,7 +112,7 @@ export const formatters = {
 }
 
 /**
- * Describes how a ViewTable shows the specified VIEW from the DB
+ * Describes how a ViewTable shows the specified table from the DB
  */
 export const tables = {
     transactions_view: {    // "transactions_view" is a table or view from the DB
@@ -157,6 +168,12 @@ export const tables = {
     }
 }
 
+/**
+ * Gives an unique key for a row when iterating with map()
+ */
 export const rowKey = (dataRow, tableName) => dataRow[tables[tableName].key]
 
+/**
+ * Format the data to show it on the screen
+ */
 export const applyFormat = (value, field, tableName) => (tables[tableName].formatters && tables[tableName].formatters[field]) ? tables[tableName].formatters[field](value) : value

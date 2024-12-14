@@ -9,12 +9,11 @@ export default function RangeFilter({field, filter , disabled}) {
     const [fromValue, setFromValue] = React.useState('')
     const [toValue, setToValue] = React.useState('')
 
-
     const handleChange = (event) => {
         const {id, value} = event.target;
 
-        if(id=='from') setFromValue(value + (field === 'period' ? "-01" : ""))
-        if(id=='to') setToValue(value + (field === 'period' ? "-01" : ""))
+        if(id=='from') setFromValue(value)
+        if(id=='to') setToValue(value)
     }
 
     React.useEffect(()=>{
@@ -40,6 +39,8 @@ export default function RangeFilter({field, filter , disabled}) {
                     size='sm'
                     id='from' 
                     type={field === 'period' ? 'month' : 'date'}
+                    value={fromValue}
+                    max={toValue}
                     onChange={handleChange} 
                     disabled={disabled}
                     />
@@ -49,7 +50,9 @@ export default function RangeFilter({field, filter , disabled}) {
                 <Form.Control 
                     size='sm'
                     id='to' 
-                    type={field === 'period' ? 'month' : 'date'} 
+                    min={fromValue}
+                    type={field === 'period' ? 'month' : 'date'}
+                    value={toValue}
                     onChange={handleChange}
                     disabled={disabled} 
                     />

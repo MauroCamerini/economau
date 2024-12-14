@@ -8,17 +8,13 @@
  * - For multiple values: `fieldname: { in: [value1, value2, ...] }`
  * - For date ranges: `fieldname: { range: { from: Date, to: Date } }`
  * - For income or expenses: `fieldname: { sign: 'positive' || 'negative' }`
- * @param {string} prefix - Prefix added to params to avoid overwrite previous params 
+ * @param {string} prefix - Prefix added to params to avoid conflicts with other params. 
  * 
- * @returns {Object} An object containing:
- * - `clause` (string): The SQL WHERE clause.
- * - `params` (Object): Key-value pairs to use as parameters in the SQL statement.
- *
  * @example
  * const filters = {
- *   ID: { equals: 255 },
- *   Category: { in: ['A', 'B'] },
- *   Date: { from: '2023-01-01', to: '2023-12-31' }
+ *   id: { equals: 255 },
+ *   category: { in: ['A', 'B'] },
+ *   date: { from: '2023-01-01', to: '2023-12-31' }
  * };
  */
 function generateWhereClause(filters, prefix = "filter_") {

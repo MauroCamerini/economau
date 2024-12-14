@@ -19,7 +19,6 @@ CREATE TABLE "categories" (
 	FOREIGN KEY("parent_id") REFERENCES "categories"("id")
 );
 
-
 CREATE TABLE "types" (
 	"id"	TEXT NOT NULL UNIQUE,
 	"name"	TEXT NOT NULL UNIQUE,
@@ -98,7 +97,7 @@ VALUES
 -- VIEWS --
 -----------
 
--- Shoews transaction data and adds names for category, account and type
+-- Shows transactions data and adds names for category, account and type
 CREATE VIEW "transactions_view"
 AS
 SELECT 
@@ -121,6 +120,8 @@ INNER JOIN types t ON t.id = trx.type
 WHERE
 	t.internal = 0;
 
+-- The income statement shows debits an credits for each non internal transaction type for each period
+-- It is an static view, so according to this type list cannot change
 CREATE VIEW "income_statement" (
 	period,
 	c_fij, c_ord, c_ext, c_total,
@@ -143,7 +144,7 @@ FROM transactions trx
 GROUP BY
 	period;
 
-
+-- Description of the transactions table foreing keys
 CREATE VIEW "linked_fields"
 AS
 SELECT 
@@ -170,16 +171,16 @@ SELECT
 FROM 
 	pragma_foreign_key_list('transactions');
 
-
+-- Lists the categories according to their hierarchy inluding depth and path
 CREATE VIEW category_items
 AS
 WITH RECURSIVE cte_hierarchy(id, parent_id, name, description, depth, path) AS (
-    -- Caso base: Nodos raíz
+    -- Base case: Roots
     SELECT id, parent_id, name, description, 0 AS depth, name AS path
     FROM categories
     WHERE parent_id IS NULL
     UNION ALL
-    -- Caso recursivo: Nodos con un padre
+    -- Recursive case: Children
     SELECT h.id, h.parent_id, h.name, h.description, cte.depth + 1, printf('%s/%s', cte.path, h.name) AS path
     FROM categories h
     INNER JOIN cte_hierarchy cte ON h.parent_id = cte.id
@@ -188,17 +189,20 @@ SELECT id, parent_id, name, description, depth, path
 FROM cte_hierarchy
 ORDER BY path;
 
+-- Lists all the types accessibles by the user
 CREATE VIEW type_items
 AS
 SELECT "id", "name", "description"
 FROM types
 WHERE internal = 0;
 
+-- Lists all the accounts
 CREATE VIEW account_items
 AS
 SELECT "id", "name", "description"
 FROM accounts;
 
+-- List all the periods that have records
 CREATE VIEW period_items
 AS
 SELECT DISTINCT "period"
@@ -207,6 +211,8 @@ FROM transactions;
 --------------
 -- TRIGGERS --
 --------------
+
+-- updates modification time on the transactions tabke
 CREATE TRIGGER trg_update_modification_time
         BEFORE UPDATE
             ON transactions

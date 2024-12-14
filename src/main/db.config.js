@@ -31,9 +31,9 @@ GROUP BY
 ORDER BY 
     root.root_path`
 
-/*
-    When
-*/
+/**
+**   Dynamic views has their own specific query.
+**/
 export const dynamicViews = {
     categories_report: {
         query: categoriesReportQuery

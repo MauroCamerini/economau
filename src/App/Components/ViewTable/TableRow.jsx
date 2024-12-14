@@ -3,7 +3,6 @@ import { applyFormat, tables } from '../../config'
 
 export default function TableRow({dataRow, tableName}) {
 
-    console.log(tableName, tables[tableName])
     return (
         <>
             <tr>

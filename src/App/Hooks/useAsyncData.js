@@ -12,7 +12,7 @@
             try {
                 setLoading(true);
                 const result = await window.ipc.getData(table, filters);
-                console.log("async data", result)
+
                 if (isMounted) {
                 setData(result.success ? result?.data : null);
                 setError(result.success ? null : result?.error);

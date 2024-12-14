@@ -14,34 +14,41 @@ export function FilteredDataProvider({ children, defaultFilter, tableName }) {
     const [loading, setLoading] = React.useState(true)
     const [filters, setFilters] = React.useState(defaultFilter || {});
 
-    console.log(data, loading, filters, tableName)
+    const isFirstRender = React.useRef(true)
 
-    const loadData = React.useCallback(async () => {
+
+    const loadData = async () => {
         const res = await window.ipc.getData(tableName, filters)
         
-        console.log(res)
         
         if(res.success){
             setData(res.data)
             setLoading(false)
         } 
-    }, [filters])
-
-    // First render load
-    React.useEffect(()=> {
-
-        if(!data) loadData()
-    }, [data])
+    }
 
     // Reloads data after filters update
     React.useEffect(() => {
-        setLoading(true)
-        loadData()
+            setLoading(true)
+            loadData()
     }, [filters])
+
+    // Updates filtesr if defaultFilter changes
+    React.useEffect(() => {
+        setFilters(defaultFilter || {});
+    }, [defaultFilter]);
 
     // Adds a filter 
     const addFilter = (field, filter, value) => {
         setFilters(prev => {
+
+            // Avoids changing the state when no the filters are not really changing
+            // This prevents reloading the data
+            if(Object.hasOwn(prev, field) && Object.hasOwn(prev[field], filter) && prev[field][filter] === value) {
+                return prev
+            }
+
+            // Adds or updates the given filter
             const newFilters = {...prev}
             newFilters[field] = {
                 [filter]: value                    
@@ -53,19 +60,22 @@ export function FilteredDataProvider({ children, defaultFilter, tableName }) {
 
     const removeFilter = (field) => {
         setFilters(prev => {
-        const newFilters = {...prev}
-
-        if(Object.hasOwn(prev, field)){
-            delete newFilters[field]
-        }
-
-        return newFilters
+        
+            if(Object.hasOwn(prev, field)){
+                const newFilters = {...prev}
+                delete newFilters[field]
+                return newFilters
+            } else {
+                return prev
+            }
+        
     })
     }
 
-    return (
+    return (<>
+
         <FilteredDataContext.Provider value={{data, loading, filters, addFilter, removeFilter, tableName, setFilters }}>
             {children}
         </FilteredDataContext.Provider>
-    )
+    </>)
 }
