@@ -1,6 +1,8 @@
 
 export const ipcFunctionsNames = [
-
-        "newTransaction",
-        "getData",
+    "newTransaction",
+    "getData",
+    "updateByID",
+    "deleteByID",
+    "insertData"
 ]

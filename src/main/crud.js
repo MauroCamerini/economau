@@ -59,10 +59,7 @@ function generateWhereClause(filters, prefix = "filter_") {
  * @param {Database} db - better-sqlite3 Database object
  * @param {string} tableName - The name of the table to insert.
  * @param {Object} data - Key-value pairs representing the fields to insert and their new values.
- * @returns {Object} Result of the insert operation:
- * An info object describing any changes made. The info object has two properties:
- * - info.changes: the total number of rows that were inserted, updated, or deleted by this operation. Changes made by foreign key actions or trigger programs do not count.
- * info.lastInsertRowid: the rowid of the last row inserted into the database (ignoring those caused by trigger programs). If the current statement did not insert any rows into the database, this number should be completely ignored.
+
  */
 export function insertRecord(db, tableName, data) {
 
@@ -85,10 +82,6 @@ export function insertRecord(db, tableName, data) {
  * @param {string} tableName - The name of the table to update.
  * @param {Object} data - Key-value pairs representing the fields to update and their new values.
  * @param {Object} filters - Filters to apply to the update operation.
- * @returns {Object} Result of the insert operation:
- * An info object describing any changes made. The info object has two properties:
- * - info.changes: the total number of rows that were inserted, updated, or deleted by this operation. Changes made by foreign key actions or trigger programs do not count.
- * info.lastInsertRowid: the rowid of the last row inserted into the database (ignoring those caused by trigger programs). If the current statement did not insert any rows into the database, this number should be completely ignored.
  */
 export function updateRecord(db, tableName, data, filters) {
 
@@ -111,10 +104,6 @@ export function updateRecord(db, tableName, data, filters) {
  * @param {Database} db - better-sqlite3 Database object
  * @param {string} tableName - The name of the table to delete records from.
  * @param {Object} filters - Filters to apply to the delete operation
- * @returns {Object} Result of the insert operation:
- * An info object describing any changes made. The info object has two properties:
- * - info.changes: the total number of rows that were inserted, updated, or deleted by this operation. Changes made by foreign key actions or trigger programs do not count.
- * info.lastInsertRowid: the rowid of the last row inserted into the database (ignoring those caused by trigger programs). If the current statement did not insert any rows into the database, this number should be completely ignored.
  */
 export function deleteRecord(db, tableName, filters) {
 
