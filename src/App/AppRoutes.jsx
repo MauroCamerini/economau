@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Route, Routes } from 'react-router-dom'
 
-// Main layout
-import Layout from './Pages/Layout'
+import Layout           from './Pages/Layout'
 
-import Home from './Pages/Home'
-import NewTransaction from './Pages/NewTransaction'
+import Home             from './Pages/Home'
+import NewTransaction   from './Pages/NewTransaction'
 import ViewTransactions from './Pages/ViewTransactions'
-import View from './Pages/View';
-import ViewByPeriod from './Pages/ViewByPeriod';
+import View             from './Pages/View';
+import ViewByPeriod     from './Pages/ViewByPeriod';
+import EditCategories   from './Pages/EditCategories';
 
 export default function AppRoutes() {
     return (
@@ -19,6 +19,7 @@ export default function AppRoutes() {
             <Route path='transactions' element={<ViewTransactions />} />
             <Route path='view/:table' element={<View />} />
             <Route path='byperiod/:table' element={<ViewByPeriod />} />
+            <Route path='edit/categories' element={<EditCategories />} />
         </Route>
         </Routes>
     )

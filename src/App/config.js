@@ -16,6 +16,12 @@ export const mainNavbarConfig = [
         ]
     },
     {
+        title: "Editar",
+        children: [
+            { path: "/edit/categories", title: "Categorías" },
+        ]
+    },
+    {
         title: "Informes",
         children: [
             {path: "/view/income_statement", title: "Resultados"},

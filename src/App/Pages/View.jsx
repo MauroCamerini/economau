@@ -1,18 +1,17 @@
 import * as React from 'react'
 import { useParams } from 'react-router-dom'
-import ViewTable from '../Components/ViewTable/ViewTable'
-import useAsyncData from '../Hooks/useAsyncData'
+import { FilteredDataProvider } from '../Context/FilteredDataContext'
+import ViewLoader from '../Components/ViewLoader'
 
 export default function View() {
     
     const { table } = useParams()
 
-    const { loading, data, error } = useAsyncData(table)
 
-    if(loading) return <div>Cargando...</div>
-
-    if(error) return <div>Error: {error}</div>
-
-    return (<ViewTable data={data} tableName={table} />)
+    return (
+        <FilteredDataProvider tableName={table}>
+            <ViewLoader />
+        </FilteredDataProvider>
+    )
 
 }

@@ -2,21 +2,24 @@ import * as React from 'react'
 import { useParams } from 'react-router-dom'
 import ViewLoader from '../Components/ViewLoader'
 import { FilteredDataProvider } from '../Context/FilteredDataContext'
-import PeriodPicker from '../Components/PeriodPicker'
+import PeriodFilter from '../Components/PeriodFilter'
 import { Stack } from 'react-bootstrap'
+import { formatters } from '../config'
 
 export default function ViewByPeriod() {
     
     const { table } = useParams()
 
+    const currentPeriod = formatters.yy_month(new Date())
+
     return (
-        <FilteredDataProvider tableName={table}>
+        <FilteredDataProvider tableName={table} defaultFilter={{period: currentPeriod}}>
             <Stack gap={3}>
-                <PeriodPicker />
+                <PeriodFilter />
                 <ViewLoader tableName={table} />
             </Stack>
         </FilteredDataProvider>
     
-)
+    )
 
 }

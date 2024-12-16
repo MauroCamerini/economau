@@ -1,14 +1,11 @@
 import * as React from 'react'
 import LoadingAnimation from './LoadingAnimation'
-import Response from './Response'
+import DBResponse from './DBResponse'
 
-export default function LoadingData({loading, data, error, children}) {
-    
-    if(loading) return <LoadingAnimation />
-    
+export default function LoadingData({loading, error}) {
+       
     return (<>
-        <Response response={{success: !error, error}} />
-        {children}
+        {loading ? <LoadingAnimation /> : <DBResponse response={{success: !error, error}} />}
     </>)
     
 }

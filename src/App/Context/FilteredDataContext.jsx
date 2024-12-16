@@ -17,9 +17,10 @@ export function FilteredDataProvider({ children, defaultFilter, tableName }) {
     const isFirstRender = React.useRef(true)
 
 
-    const loadData = async () => {
+    const reload = async () => {
+        setLoading(true)
+
         const res = await window.ipc.getData(tableName, filters)
-        
         
         if(res.success){
             setData(res.data)
@@ -29,8 +30,8 @@ export function FilteredDataProvider({ children, defaultFilter, tableName }) {
 
     // Reloads data after filters update
     React.useEffect(() => {
-            setLoading(true)
-            loadData()
+            
+            reload()
     }, [filters])
 
     // Updates filtesr if defaultFilter changes
@@ -74,7 +75,7 @@ export function FilteredDataProvider({ children, defaultFilter, tableName }) {
 
     return (<>
 
-        <FilteredDataContext.Provider value={{data, loading, filters, addFilter, removeFilter, tableName, setFilters }}>
+        <FilteredDataContext.Provider value={{data, loading, filters, addFilter, removeFilter, tableName, setFilters, reload }}>
             {children}
         </FilteredDataContext.Provider>
     </>)

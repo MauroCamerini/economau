@@ -9,7 +9,10 @@ async function deleteByID(db, table, id) {
             info
         }
     } catch (e) {
-
+        return {
+            success: false,
+            error: e.message
+        }    
     }
 }
 
@@ -60,7 +63,11 @@ async function newTransaction(db, data) {
 }
 
 async function getData(db, table, filters) {
+
+    
     try {
+        if(dynamicViews[table] && !filters) throw new Error("Debes espcificar los parámetros para obtener los datos");
+        
         const data = dynamicViews[table] 
             ? executeQuery(db, dynamicViews[table].query, filters) 
             : readRecords(db, table, filters)

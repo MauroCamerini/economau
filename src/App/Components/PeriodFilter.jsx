@@ -6,10 +6,10 @@ import { FilteredDataContext } from '../Context/FilteredDataContext'
 import LoadingData from './LoadingData'
 
 /**
- * A <select> that lists every period that has records. Updates the FilteredDataContext.
+ * A select element that lists every period that has records. Updates the FilteredDataContext.
  * @see {FilteredDataContext}
  */
-export default function PeriodPicker() {
+export default function PeriodFilter() {
 
     const { setFilters } = React.useContext(FilteredDataContext)
 
@@ -21,9 +21,9 @@ export default function PeriodPicker() {
         setFilters({period: value})
     }
 
-    return (
-        <LoadingData loading={loading} error={error}>
-            {data &&
+    return (<>
+        <LoadingData loading={loading} error={error} />
+        {data &&
             <Form.Group>
             <Form.Label>Seleccionar período</Form.Label>
             <Form.Select
@@ -37,8 +37,8 @@ export default function PeriodPicker() {
                     </option>
                 ))}
             </Form.Select>
-            </Form.Group>}
-        </LoadingData>
-    )
+            </Form.Group>
+        }
+    </>)
 
 }

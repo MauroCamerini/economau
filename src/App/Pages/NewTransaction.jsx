@@ -1,21 +1,17 @@
 import * as React from 'react';
 import TransactionForm from '../Components/TransactionForm/TransactionForm'
 import { Stack } from 'react-bootstrap';
-import Response from '../Components/Response';
+import DBResponse from '../Components/DBResponse';
 
 
 export default function NewTransaction () {
 
-    const [response, setResponse] = React.useState(null)
-
-    const onDBResponse = (res) => {
-        setResponse(res)
-    }
+    const [dbResponse, setDBResponse] = React.useState(null)
 
     return(<>
         <Stack gap={3}>
-            <TransactionForm onDBResponse={onDBResponse}/>
-            <Response response={response} successMsg={`Transacción agregada con éxito (ID ${response?.info?.lastInsertRowid})`} />
+            <TransactionForm onDBResponse={setDBResponse}/>
+            <DBResponse dbResponse={dbResponse} successMsg={`Transacción agregada con éxito (ID ${dbResponse?.info?.lastInsertRowid})`} />
         </Stack>
     </>)
 }
