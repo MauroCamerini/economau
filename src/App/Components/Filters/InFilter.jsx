@@ -110,7 +110,7 @@ export default function InFilter({field, disabled}) {
         {
             picked && items.map(item => 
                 <option key={item.id} value={item.id}>
-                    {`${(Object.hasOwn(item, 'depth') && "> ".repeat(item.depth))}${item.name}${(picked.indexOf(item.id)<0 ? ""  : " ✓")}`}
+                    {`${(Object.hasOwn(item, 'depth') ? "> ".repeat(item.depth): "")}${item.name}${(picked.indexOf(item.id)<0 ? ""  : " ✓")}`}
                 </option>
             )
         }

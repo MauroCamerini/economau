@@ -28,6 +28,13 @@ export const mainNavbarConfig = [
             {path: "/byperiod/categories_report", title: "Categorías por período"}
         ]
     },
+    {
+        title: "Test",
+        children: [
+            { path: "/test", title: "test"}
+        ]
+    },
+    
 ]
 
 export const filtersConfig = {

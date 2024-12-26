@@ -23,8 +23,6 @@ function useAsyncData(table, filters) {
     }
 
     useEffect(() => {
-
-        "EFFECT"
         reload()
 
     }, [table, filters]);

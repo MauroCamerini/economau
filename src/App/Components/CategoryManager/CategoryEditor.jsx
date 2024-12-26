@@ -35,6 +35,11 @@ export default function CategoryEditor({ categoryItem, onDBResponse }) {
                 name,
                 parent_id: parentID,
             })
+
+            // Cleans form
+            setParentID(categoryItem?.id || null)
+            setName(categoryItem?.name || "")
+
         } else if (action === "save") {
             // UPDATE
             response = await window.ipc.updateByID(TABLE_NAME, categoryItem.id, {
@@ -49,10 +54,8 @@ export default function CategoryEditor({ categoryItem, onDBResponse }) {
     }
 
     React.useEffect(() => {
-        if(categoryItem){
-            setParentID(categoryItem.id)
-            setName(categoryItem.name)
-        }
+        setParentID(categoryItem?.id || null)
+        setName(categoryItem?.name || "")
     }, [categoryItem])
 
     return (

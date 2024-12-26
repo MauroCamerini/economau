@@ -4,6 +4,7 @@ import { Form } from 'react-bootstrap'
 import { formatters } from '../config'
 import { FilteredDataContext } from '../Context/FilteredDataContext'
 import LoadingData from './LoadingData'
+import PickerContainer from './PickerContainer'
 
 /**
  * A select element that lists every period that has records. Updates the FilteredDataContext.
@@ -24,6 +25,7 @@ export default function PeriodFilter() {
     return (<>
         <LoadingData loading={loading} error={error} />
         {data &&
+            <PickerContainer>
             <Form.Group>
             <Form.Label>Seleccionar período</Form.Label>
             <Form.Select
@@ -38,6 +40,7 @@ export default function PeriodFilter() {
                 ))}
             </Form.Select>
             </Form.Group>
+            </PickerContainer>
         }
     </>)
 

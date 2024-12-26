@@ -10,12 +10,13 @@ export const FilteredDataContext = React.createContext()
  * Load transacions according to filters
  */
 export function FilteredDataProvider({ children, defaultFilter, tableName }) {
+    
+    // I'm not using useAsyncData because it caused provider to fully re-render
+    const [error, setError] = React.useState(null)
     const [data, setData] = React.useState(null)
     const [loading, setLoading] = React.useState(true)
+    
     const [filters, setFilters] = React.useState(defaultFilter || {});
-
-    const isFirstRender = React.useRef(true)
-
 
     const reload = async () => {
         setLoading(true)
@@ -24,8 +25,12 @@ export function FilteredDataProvider({ children, defaultFilter, tableName }) {
         
         if(res.success){
             setData(res.data)
-            setLoading(false)
-        } 
+            setError(null)
+        } else {
+            setData(null)
+            setError(res.error)
+        }
+        setLoading(false)
     }
 
     // Reloads data after filters update
@@ -75,7 +80,11 @@ export function FilteredDataProvider({ children, defaultFilter, tableName }) {
 
     return (<>
 
-        <FilteredDataContext.Provider value={{data, loading, filters, addFilter, removeFilter, tableName, setFilters, reload }}>
+        <FilteredDataContext.Provider value={
+            {
+                tableName,
+                data, loading, error, reload,
+                filters, addFilter, removeFilter, setFilters }}>
             {children}
         </FilteredDataContext.Provider>
     </>)

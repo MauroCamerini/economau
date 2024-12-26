@@ -1,6 +1,10 @@
 # Economau
 A simple, portable desktop app to track my income and expenses. Built with **Electron**, **React**, and **SQLite**.
 
+## Important!!
+
+  **I'm not working on this repository anymore; it's just here to document the first steps of the app development. The project continues at: [Desktop React SQL Ledger](https://github.com/MauroCamerini/desktop-react-sql-ledger)**
+
 ## Features
 - **Portable:** Runs on any platform thanks to Electron.
 - **User-Friendly UI:** Built with React, featuring React Router, Forms, and Bootstrap for a clean, smooth experience.

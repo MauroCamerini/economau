@@ -14,8 +14,10 @@ export default function CategoryManager() {
     const [ pickedCategoryItem, setPickedCategoryItem ] = React.useState(null)
 
     React.useEffect(() => {
-        if(dbResponse && dbResponse.success) 
-            reload();
+        if(dbResponse && dbResponse.success) {
+            setPickedCategoryItem(null) // Causes category editor to not render
+            reload()
+        }
     }, [dbResponse])
 
     return(<>{ data &&
@@ -37,7 +39,7 @@ export default function CategoryManager() {
                     onDBResponse={(response) => setDBResponse(response)}
                 /> 
             }
-            <DBResponse dbResponse={dbResponse} />
+            <DBResponse dbResponse={dbResponse} successMsg={`Operación realizada con éxito ${(dbResponse?.info?.lastInsertRowid) || " "}`} />
         </Stack>
         }
     </>)

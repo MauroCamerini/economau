@@ -1,13 +1,18 @@
 import * as React from 'react'
 import { FilteredDataContext } from '../Context/FilteredDataContext'
 import ViewTable from './ViewTable/ViewTable'
+import LoadingData from './LoadingData'
 
 /**
  * Shows the data disposed by the FilteredDataContext
  * @see FilteredDataContext
  */
 export default function ViewLoader() {
-    const {data, tableName} = React.useContext(FilteredDataContext)
+    const {loading, data, error, tableName} = React.useContext(FilteredDataContext)
 
-    return (<>{data && <ViewTable data={data} tableName={tableName} />}</>)
+
+    return (<>
+        <LoadingData loading={loading} error={error} />
+        {data && <ViewTable data={data} tableName={tableName} />}
+    </>)
 }

@@ -6,9 +6,11 @@ import Layout           from './Pages/Layout'
 import Home             from './Pages/Home'
 import NewTransaction   from './Pages/NewTransaction'
 import ViewTransactions from './Pages/ViewTransactions'
-import View             from './Pages/View';
-import ViewByPeriod     from './Pages/ViewByPeriod';
-import EditCategories   from './Pages/EditCategories';
+import View             from './Pages/View'
+import ViewByPeriod     from './Pages/ViewByPeriod'
+import EditCategories   from './Pages/EditCategories'
+
+import Test             from './Pages/Test'
 
 export default function AppRoutes() {
     return (
@@ -20,6 +22,7 @@ export default function AppRoutes() {
             <Route path='view/:table' element={<View />} />
             <Route path='byperiod/:table' element={<ViewByPeriod />} />
             <Route path='edit/categories' element={<EditCategories />} />
+            <Route path='test' element={<Test />} />
         </Route>
         </Routes>
     )
